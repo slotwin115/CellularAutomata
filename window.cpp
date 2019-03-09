@@ -4,38 +4,23 @@ Window::Window(QWidget *parent) : QWidget(parent)
 {
     this->setFixedSize(1024, 768);
 
-    this->button = new QPushButton(tr("Click me"), this);
-    this->button->setGeometry(this->width() - 150, 50, 100, 100);
-    connect(this->button, SIGNAL(clicked()), this, SLOT(changeButtonText()));
-    this->button->show();
+    this->automata = new Automata(10, -546);
 
-    this->canvas = new GLWidget(this);
-    this->canvas->setGeometry(50, 50, 700, 700);
-    connect(this->button, SIGNAL(clicked()), this, SLOT(changeCanvas()));
+    this->canvas = new GLWidget(this, this->automata);
+    this->canvas->setGeometry(15, 34, 700, 700);
+
+    this->controls = new Controls(this, this->automata, this->canvas);
+    this->controls->setGeometry(715, 34, 1024 - 715, this->height() - 34);
+
+
     this->canvas->show();
-    std::cout << this->canvas->width() << "\n" << this->canvas->height() << std::endl;
-}
-
-void Window::changeButtonText()
-{
-    if(this->button->text() == "Click me")
-    {
-        this->button->setText("I changed");
-    }
-    else
-    {
-        this->button->setText("Click me");
-    }
-}
-
-void Window::changeCanvas()
-{
-    this->canvas->update();
+    this->controls->show();
 }
 
 Window::~Window()
 {
-    delete this->button;
     this->canvas->cleanup();
+    delete this->controls;
     delete this->canvas;
+    delete this->automata;
 }

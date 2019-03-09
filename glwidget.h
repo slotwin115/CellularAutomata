@@ -5,14 +5,20 @@
 #include <QPainter>
 #include <QOpenGLFunctions>
 #include <iostream>
+#include <QPoint>
+#include <QSize>
 #include "automata.h"
 #include "cell.h"
 
 class GLWidget : public QOpenGLWidget
 {
+    Q_OBJECT
+
 public:
-    GLWidget(QWidget *parent = nullptr);
+    GLWidget(QWidget *parent = nullptr, Automata *automata = nullptr);
     void cleanup();
+    QPoint getMouseCoords();
+    QSize getResolution();
 
 protected:
     void initializeGL() override;
@@ -21,7 +27,6 @@ protected:
 
 private:
     QSurfaceFormat *format;
-    QPainter *painter;
     Automata *automata;
 };
 

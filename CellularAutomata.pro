@@ -29,13 +29,15 @@ SOURCES += \
         window.cpp \
     glwidget.cpp \
     cell.cpp \
-    automata.cpp
+    automata.cpp \
+    controls.cpp
 
 HEADERS += \
         window.h \
     glwidget.h \
     cell.h \
-    automata.h
+    automata.h \
+    controls.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

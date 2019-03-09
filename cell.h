@@ -8,6 +8,7 @@ class Cell
 {
 public:
     Cell(bool state = false);
+    ~Cell();
 
     void setState(bool state);
     bool isAlive();

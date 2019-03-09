@@ -2,8 +2,10 @@
 #define WINDOW_H
 
 #include <QWidget>
-#include <QPushButton>
+
 #include "glwidget.h"
+#include "automata.h"
+#include "controls.h"
 
 class Window : public QWidget
 {
@@ -13,13 +15,10 @@ public:
     Window(QWidget *parent = nullptr);
     ~Window();
 
-public slots:
-    void changeButtonText();
-    void changeCanvas();
-
 private:
-    QPushButton *button;
     GLWidget *canvas;
+    Controls *controls;
+    Automata *automata;
 };
 
 #endif // WINDOW_H

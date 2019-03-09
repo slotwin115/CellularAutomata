@@ -41,3 +41,5 @@ void Cell::render(unsigned int x, unsigned int y, float ratio)
         glVertex2f(leftbottom[0], leftbottom[1]);
     glEnd();
 }
+
+Cell::~Cell() {}

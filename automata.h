@@ -3,9 +3,6 @@
 
 #include <vector>
 #include <random>
-#include <chrono>
-#include <limits>
-#include <iostream>
 #include "cell.h"
 
 class Automata
@@ -13,9 +10,13 @@ class Automata
 public:
     Automata(unsigned int nCells);
     Automata(unsigned int nCells, long seed);
+    void initGrid();
+    void initRandomGrid(long seed);
     void randomize(long seed);
     void render(int resolution);
     void run();
+    unsigned int getnCells();
+    void setNCells(unsigned int nCells, bool randomize = false, long seed = 0);
     ~Automata();
 
 private:
