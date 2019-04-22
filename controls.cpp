@@ -31,7 +31,7 @@ Controls::Controls(QWidget *parent, Automata *automata, GLWidget *canvas) : QWid
     this->resolutionTextBox = new QLineEdit(res);
     this->layout->addWidget(this->resolutionTextBox, 3, 1);
 
-    this->resolutionScrollBar = new QScrollBar(Qt::Horizontal, this);
+    this->resolutionScrollBar = new QSlider(Qt::Horizontal, this);
     this->resolutionScrollBar->setRange(5, 1000);
     this->resolutionScrollBar->setValue(this->automata->getnCells());
     connect(this->resolutionScrollBar, SIGNAL(valueChanged(int)), this, SLOT(updateResolutionTextBox(int)));
@@ -47,6 +47,8 @@ Controls::Controls(QWidget *parent, Automata *automata, GLWidget *canvas) : QWid
     this->layout->addWidget(this->iterationTextBox, 5, 1);
 
     this->timer = new QTimer(this->canvas);
+    this->timer->setInterval(500);
+    connect(this->timer, SIGNAL(timeout()), this->canvas, SLOT(animate()));
     connect(this->timer, SIGNAL(timeout()), this, SLOT(changeCanvas()));
 }
 
@@ -55,9 +57,8 @@ void Controls::changeButtonText()
     if(this->startButton->text() == "Start")
     {
         this->disableControls();
-        this->changeCanvas();
         this->startButton->setText("Stop");
-        this->timer->start(1000);
+        this->timer->start();
     }
     else
     {
@@ -115,6 +116,14 @@ void Controls::updateResolutionScrollBar(const QString &value)
     this->iteration = 0;
 }
 
+void Controls::updateResolutionScrollBar(int value)
+{
+    this->automata->setNCells(value, true, this->seed);
+    this->canvas->update();
+    this->resolutionScrollBar->setValue(value);
+    this->iteration = 0;
+}
+
 void Controls::updateSeedTextBox()
 {
     this->pollSeed();
@@ -142,5 +151,14 @@ void Controls::show()
 Controls::~Controls()
 {
     delete this->startButton;
+    delete this->randomSeed;
+    delete this->seedLabel;
+    delete this->resolutionLabel;
+    delete this->seedTextBox;
+    delete this->resolutionTextBox;
+    delete this->resolutionScrollBar;
     delete this->timer;
+    delete this->iterationLabel;
+    delete this->iterationTextBox;
+    delete this->layout;
 }

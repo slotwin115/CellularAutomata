@@ -1,6 +1,7 @@
 #ifndef AUTOMATA_H
 #define AUTOMATA_H
 
+#include <QPaintEvent>
 #include <vector>
 #include <random>
 #include "cell.h"
@@ -13,7 +14,7 @@ public:
     void initGrid();
     void initRandomGrid(long seed);
     void randomize(long seed);
-    void render(int resolution);
+    void render(int resolution, int zoom = 0);
     void run();
     unsigned int getnCells();
     void setNCells(unsigned int nCells, bool randomize = false, long seed = 0);

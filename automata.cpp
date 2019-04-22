@@ -48,15 +48,15 @@ void Automata::initRandomGrid(long seed)
     }
 }
 
-void Automata::render(int resolution)
+void Automata::render(int resolution, int zoom)
 {
-    float cellSize = static_cast<float>(resolution) / static_cast<float>(this->nCells);
-    float ratio = cellSize / resolution;
-    for(unsigned int i = 0; i < this->nCells; ++i)
+    unsigned int ncells = this->nCells + zoom;
+    float cellSize = static_cast<float>(resolution) / static_cast<float>(ncells);
+    for(unsigned int i = 0; i < ncells; ++i)
     {
-        for(unsigned int j = 0; j < this->nCells; ++j)
+        for(unsigned int j = 0; j < ncells; ++j)
         {
-            this->grid[i][j]->render(i, j, ratio);
+            this->grid[i][j]->render(i, j, cellSize);
         }
     }
 }

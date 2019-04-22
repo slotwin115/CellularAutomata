@@ -7,10 +7,16 @@
 #include <iostream>
 #include <QPoint>
 #include <QSize>
+#include <QWheelEvent>
+#include <QMouseEvent>
+#include <QTimer>
+#include <QtOpenGL>
+#include <iostream>
 #include "automata.h"
-#include "cell.h"
 
-class GLWidget : public QOpenGLWidget
+class Controls;
+
+class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 
@@ -20,14 +26,22 @@ public:
     QPoint getMouseCoords();
     QSize getResolution();
 
+public slots:
+    void animate();
+
 protected:
     void initializeGL() override;
-    void paintGL() override;
     void resizeGL(int width, int height) override;
+    void paintEvent(QPaintEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    QSurfaceFormat *format;
+//    QSurfaceFormat *format;
     Automata *automata;
+    Controls *controls;
+    //! \brief zoom -> respresents zoom factor.
+    int zoom;
 };
 
 #endif // GLWIDGET_H

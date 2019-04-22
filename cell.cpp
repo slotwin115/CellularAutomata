@@ -17,13 +17,27 @@ bool Cell::isAlive()
 
 void Cell::render(unsigned int x, unsigned int y, float ratio)
 {
-    float leftTop[] = {(x * ratio) * 2 - 1.0f, 1.0f - (y * ratio) * 2};
+    // optimalization
+    /*
+     * (baseX, baseY)                    (baseX + ratio, baseY)
+     *              *---------------------*
+     *              |                     |
+     *              |                     |
+     *              |                     |
+     *              |                     |
+     *              |                     |
+     *              |                     |
+     *              |                     |
+     *              *---------------------*
+     *  (baseX, baseY + ratio)      (baseX + ratio, baseY + ratio)
+    */
+    float baseX = x * ratio;
+    float baseY = y * ratio;
 
-    float rightTop[] = {((x + 1) * ratio)  * 2 - 1.0f, 1.0f - (y * ratio) * 2};
-
-    float rightbottom[] = {((x + 1) * ratio) * 2 - 1.0f, 1.0f - ((y + 1) * ratio) * 2};
-
-    float leftbottom[] = {(x * ratio) * 2 - 1.0f, 1.0f - ((y + 1) * ratio) * 2};
+    float leftTop[2] = {baseX, baseY};
+    float rightTop[2] = {baseX + ratio, baseY};
+    float rightBottom[2] = {baseX + ratio, baseY + ratio};
+    float leftBottom[2] = {baseX, baseY + ratio};
 
     int c = this->state ? 1 : 0;
 
@@ -35,10 +49,10 @@ void Cell::render(unsigned int x, unsigned int y, float ratio)
         glVertex2f(rightTop[0], rightTop[1]);
 
         glColor3f(c, c, c);
-        glVertex2f(rightbottom[0], rightbottom[1]);
+        glVertex2f(rightBottom[0], rightBottom[1]);
 
         glColor3f(c, c, c);
-        glVertex2f(leftbottom[0], leftbottom[1]);
+        glVertex2f(leftBottom[0], leftBottom[1]);
     glEnd();
 }
 

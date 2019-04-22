@@ -2,6 +2,8 @@
 #define WINDOW_H
 
 #include <QWidget>
+#include <QResizeEvent>
+#include <QSize>
 
 #include "glwidget.h"
 #include "automata.h"
@@ -13,12 +15,17 @@ class Window : public QWidget
 
 public:
     Window(QWidget *parent = nullptr);
-    ~Window();
+    ~Window() override;
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     GLWidget *canvas;
     Controls *controls;
     Automata *automata;
+    const int canvasOffset;
+    int canvasSize;
 };
 
 #endif // WINDOW_H

@@ -5,10 +5,11 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QLineEdit>
-#include <QScrollBar>
+#include <QSlider>
 #include <QTimer>
 #include <QPoint>
 #include <QGridLayout>
+#include <QApplication>
 
 #include <limits>
 #include <random>
@@ -33,6 +34,7 @@ public:
 public slots:
     void updateResolutionTextBox(int value);
     void updateResolutionScrollBar(const QString &value);
+    void updateResolutionScrollBar(int value);
     void updateSeedTextBox();
     void updateSeed(const QString &value);
     void updateIteration(const QString &value);
@@ -46,7 +48,7 @@ private:
     QLabel *resolutionLabel;
     QLineEdit *seedTextBox;
     QLineEdit *resolutionTextBox;
-    QScrollBar *resolutionScrollBar;
+    QSlider *resolutionScrollBar;
     Automata *automata;
     GLWidget *canvas;
     QTimer *timer;
